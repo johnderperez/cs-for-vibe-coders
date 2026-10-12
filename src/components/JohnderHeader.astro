@@ -1,0 +1,77 @@
+---
+// Copied from johnder-com/src/components/SiteHeader.astro. The course lives under Guides, so Guides is active.
+const pathname = '/guides/computer-science-for-vibe-coders';
+
+const items = [
+	{ label: 'Home', href: '/' },
+	{ label: 'Build Stuff', href: '/build-stuff' },
+	{ label: 'Guides', href: '/guides' },
+	{ label: 'About', href: '/about' },
+	{ label: 'Join', href: '/join' },
+	{ label: 'Contact', href: '/contact' },
+];
+
+function isActive(href: string): boolean {
+	if (href === '/') return pathname === '/';
+	return pathname === href || pathname.startsWith(href + '/');
+}
+---
+
+<header class="site-head">
+	<div class="inner">
+		<a class="wordmark" href="/">Johnder Perez</a>
+		<button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">Menu</button>
+		<nav id="primary-nav" class="nav" aria-label="Primary" hidden>
+			{items.map((item) => (
+				<a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+					{item.label}
+				</a>
+			))}
+		</nav>
+	</div>
+</header>
+
+<script>
+	const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+	const nav = document.getElementById('primary-nav');
+	const mq = window.matchMedia('(max-width: 48rem)');
+
+	function setOpen(open: boolean, restoreFocus = true) {
+		if (!toggle || !nav) return;
+		toggle.setAttribute('aria-expanded', String(open));
+		toggle.textContent = open ? 'Close' : 'Menu';
+		toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+		nav.hidden = mq.matches ? !open : false;
+		document.body.classList.toggle('nav-open', open && mq.matches);
+		if (open) nav.querySelector<HTMLAnchorElement>('a')?.focus();
+		else if (restoreFocus && mq.matches) toggle.focus();
+	}
+
+	function sync() {
+		if (!toggle || !nav) return;
+		if (mq.matches) {
+			setOpen(toggle.getAttribute('aria-expanded') === 'true', false);
+		} else {
+			toggle.setAttribute('aria-expanded', 'false');
+			toggle.textContent = 'Menu';
+			nav.hidden = false;
+			document.body.classList.remove('nav-open');
+		}
+	}
+
+	toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+
+	document.addEventListener('keydown', (e) => {
+		if (!toggle || !nav || toggle.getAttribute('aria-expanded') !== 'true') return;
+		if (e.key === 'Escape') { e.preventDefault(); setOpen(false); return; }
+		if (e.key === 'Tab') {
+			const f = [toggle, ...nav.querySelectorAll<HTMLAnchorElement>('a')];
+			const first = f[0], last = f[f.length - 1];
+			if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+			else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+		}
+	});
+
+	mq.addEventListener('change', sync);
+	sync();
+</script>
