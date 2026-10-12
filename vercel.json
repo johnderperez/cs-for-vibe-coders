@@ -33,6 +33,39 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs-for-vibe-coders.vercel.app"
+        }
+      ],
+      "destination": "https://www.johnder.com/computer-science-for-vibe-coders",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "computer-science-for-vibe-coders.vercel.app"
+        }
+      ],
+      "destination": "https://www.johnder.com/computer-science-for-vibe-coders",
+      "statusCode": 301
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "csforvibecoders.vercel.app"
+        }
+      ],
+      "destination": "https://www.johnder.com/computer-science-for-vibe-coders",
+      "statusCode": 301
+    },
+    {
       "source": "/computer-science-for-vibe-coders/:path*",
       "has": [
         {
