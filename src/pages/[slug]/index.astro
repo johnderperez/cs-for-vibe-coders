@@ -9,9 +9,10 @@ export function getStaticPaths() { return phases.map((p, i) => ({ params: { slug
 const { p, prev, next } = Astro.props;
 const st = steps[p.slug];
 ---
-<Base title={p.name} description={`${p.goal} Short plain-English steps, quick quizzes, common AI-generated mistakes, a milestone checklist and free resources.`}>
+<Base crumbs={[{ label: p.name }]} title={p.name} description={`${p.goal} Short plain-English steps, quick quizzes, common AI-generated mistakes, a milestone checklist and free resources.`}>
   <p class="eyebrow">Track {p.num} of 4 · {p.topics.length} short steps</p>
   <h1>{p.name}</h1>
+  <hr class="page-rule" />
   <p class="lead"><strong>Goal:</strong> {p.goal}</p>
   <details class="more"><summary>Why this matters</summary><p>{p.intro}</p></details>
   <nav aria-label="On this page" class="muted">Jump to: <a href="#steps">Steps</a> · <a href="#activity">Activity</a> · <a href="#mistakes">AI mistakes</a> · <a href="#milestones">Checklist</a> · <a href="#reading">Reading</a></nav>

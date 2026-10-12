@@ -40,9 +40,10 @@ const sections = [
    ai:'Agents sometimes deploy straight from a local machine or skip the checks. Let the pipeline be the only way to production.' },
 ];
 ---
-<Base title="Shipping real apps" description="A practical checklist for vibe coders shipping real apps: Git branches, PRs and CI, secrets, auth, database migrations, Row Level Security, testing and deploys.">
+<Base crumbs={[{ label: "Shipping real apps" }]} title="Shipping real apps" description="A practical checklist for vibe coders shipping real apps: Git branches, PRs and CI, secrets, auth, database migrations, Row Level Security, testing and deploys.">
   <p class="eyebrow">Bonus track</p>
   <h1>Shipping real apps</h1>
+  <hr class="page-rule" />
   <p class="lead">The CS tracks build understanding over months. This page is what you need today if real people are about to use something you built. Work through it before launch, and again every time you add something big.</p>
   <nav aria-label="On this page" class="muted">Jump to: {sections.map((s, i) => <>{i ? ' · ' : ''}<a href={`#${s.id}`}>{s.h}</a></>)}</nav>
   <Activities kind="order" />

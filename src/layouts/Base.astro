@@ -1,8 +1,11 @@
 ---
 import { u } from '../data/url.js';
 import '../styles/global.css';
+import '../johnder/johnder.css';
+import JohnderHeader from '../components/JohnderHeader.astro';
+import footer from '../johnder/footer.html?raw';
 import { phases } from '../data/phases.js';
-const { title, description = "A free, plain-English computer science course for people who build apps with AI tools like Lovable, Cursor and Claude." } = Astro.props;
+const { crumbs = [], title, description = "A free, plain-English computer science course for people who build apps with AI tools like Lovable, Cursor and Claude." } = Astro.props;
 const site = "Computer Science for Vibe Coders";
 const full = title ? `${title} | ${site}` : `${site}: Learn the fundamentals behind AI-built apps`;
 const canonical = new URL(Astro.url.pathname.replace(/(.)\/$/, '$1'), Astro.site);
@@ -39,23 +42,13 @@ const nav = [
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="top">
-  <div class="wrap bar">
-    <a href={u("/")} class="brand"><span class="logo" aria-hidden="true">&lt;/&gt;</span> CS for Vibe Coders</a>
-    <nav aria-label="Main">
-      <ul>
-        {nav.map(n => <li><a href={u(n.href)} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
-      </ul>
-    </nav>
-  </div>
-</header>
-<main id="main" class="wrap"><slot /></main>
-<footer class="foot">
-  <div class="wrap">
-    <p>A free side project by Johnder Perez. Share it with anyone who builds with AI.</p>
-    <p class="muted">Book and course links go to their official sites. Nothing here is sponsored.</p>
-  </div>
-</footer>
+<JohnderHeader />
+<main id="main" class="page">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/guides">Guides</a> / {crumbs.length ? <a href={u('/')}>Computer Science for Vibe Coders</a> : <span aria-current="page">Computer Science for Vibe Coders</span>}</nav>
+  <nav class="crumbs subcrumbs" aria-label="Course breadcrumb">{crumbs.length ? <a href={u('/')}>Course</a> : <span aria-current="page">Course</span>}{crumbs.map((c, i) => <> / {c.href && i < crumbs.length - 1 ? <a href={u(c.href)}>{c.label}</a> : <span aria-current={i === crumbs.length - 1 ? 'page' : undefined}>{c.label}</span>}</>)}</nav>
+  <slot />
+</main>
+<Fragment set:html={footer} />
 <script>
   const get = k => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch { return null; } };
   const set = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };

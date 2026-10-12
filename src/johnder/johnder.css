@@ -1,0 +1,162 @@
+/* Copied verbatim from johnder-com/src/layouts/SiteLayout.astro (header, page, footer). Keep in sync. */
+	:root {
+		color-scheme: light;
+
+		--paper: #ffffff;
+		--panel: #ffffff;
+		--ink: #000000;
+		--ink-soft: #555555;
+		--hair: #cccccc;
+		--ink-invert: #ffffff;
+		--focus: #000000;
+
+		--sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+		--mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace;
+
+		--w: 44rem;
+	}
+
+	* { box-sizing: border-box; }
+	html { font-size: 17px; }
+
+	body {
+		margin: 0;
+		background: var(--paper);
+		color: var(--ink);
+		font-family: var(--sans);
+		line-height: 1.6;
+		-webkit-font-smoothing: antialiased;
+		overflow-wrap: break-word;
+	}
+
+	a { color: var(--ink); }
+	img { max-width: 100%; height: auto; }
+
+	.sr-only {
+		position: absolute;
+		width: 1px; height: 1px;
+		padding: 0; margin: -1px;
+		overflow: hidden; clip: rect(0 0 0 0);
+		white-space: nowrap; border: 0;
+	}
+
+	/* ---------- Header / nav ---------- */
+	.site-head {
+		position: sticky; top: 0; z-index: 20;
+		background: var(--paper);
+		border-bottom: 2px solid var(--ink);
+	}
+	.site-head .inner {
+		max-width: var(--w); margin: 0 auto;
+		padding: 0.7rem 1.25rem;
+		display: flex; align-items: center; gap: 1rem;
+	}
+	.wordmark {
+		font-weight: 700; letter-spacing: -0.01em;
+		text-decoration: none; font-size: 0.98rem; margin-right: auto;
+	}
+	.site-head .nav {
+		display: flex; gap: 0.2rem 0.35rem;
+		font-family: var(--mono); font-size: 0.72rem;
+		text-transform: uppercase; letter-spacing: 0.06em;
+	}
+	.site-head .nav a {
+		text-decoration: none; color: var(--ink-soft);
+		padding: 0.3rem 0.5rem;
+	}
+	.site-head .nav a:hover,
+	.site-head .nav a:focus-visible { color: var(--ink); outline: none; }
+	.site-head .nav a[aria-current='page'] { color: var(--ink-invert); background: var(--ink); }
+
+	.nav-toggle {
+		display: none; appearance: none;
+		background: var(--paper); color: var(--ink);
+		border: 1px solid var(--ink);
+		font-family: var(--mono); font-size: 0.9rem;
+		line-height: 1; padding: 0.4rem 0.55rem; cursor: pointer;
+	}
+	.nav-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+	@media (max-width: 48rem) {
+		.nav-toggle { display: block; position: relative; z-index: 2; }
+		.site-head .nav {
+			position: fixed; inset: 0; z-index: 1;
+			flex-direction: column; justify-content: center; gap: 0;
+			background: var(--paper);
+			padding: 4.5rem 1.5rem 2rem;
+			font-size: 1.05rem; overflow-y: auto;
+		}
+		.site-head .nav[hidden] { display: none; }
+		.site-head .nav a {
+			padding: 1rem 0.25rem;
+			border-top: 1px solid var(--hair);
+			color: var(--ink);
+		}
+		.site-head .nav a:last-child { border-bottom: 1px solid var(--hair); }
+		.site-head .nav a[aria-current='page'] { padding-left: 0.75rem; }
+		body.nav-open { overflow: hidden; }
+	}
+
+	/* ---------- Page container ---------- */
+	.page {
+		max-width: var(--w); margin: 0 auto;
+		padding: clamp(2rem, 6vw, 3.5rem) 1.25rem 4rem;
+	}
+
+	.eyebrow {
+		font-family: var(--mono); font-size: 0.7rem;
+		letter-spacing: 0.14em; text-transform: uppercase;
+		color: var(--ink-soft); margin: 0 0 0.5rem;
+	}
+	.page-title {
+		font-size: clamp(1.6rem, 1.1rem + 2.4vw, 2.3rem);
+		font-weight: 700; letter-spacing: -0.02em;
+		margin: 0 0 0.6rem; text-wrap: balance;
+	}
+	.lede { margin: 0 0 2rem; max-width: 36rem; color: var(--ink-soft); }
+	.page-rule { border: 0; border-top: 2px solid var(--ink); margin: 0 0 1.75rem; }
+
+	/* ---------- Common footer ---------- */
+	.foot-contact { margin-left: auto; }
+	.foot-contact a { display: inline-flex; align-items: center; gap: 0.5rem; }
+	.px-mail { width: 26px; height: 18px; fill: var(--ink); image-rendering: pixelated; }
+	.site-foot { border-top: 2px solid var(--ink); margin-top: 3rem; }
+	.site-foot .inner {
+		max-width: var(--w); margin: 0 auto;
+		padding: 1.5rem 1.25rem 2.25rem;
+		display: flex; flex-wrap: wrap; align-items: center;
+		gap: 1rem 1.75rem;
+	}
+	.foot-social {
+		display: flex; gap: 0.8rem; align-items: center;
+		margin-right: auto;
+		opacity: 0.55; transition: opacity 0.15s linear;
+	}
+	.foot-social:hover { opacity: 1; }
+	.foot-social a { display: block; line-height: 0; color: var(--ink); }
+	.foot-social svg {
+		width: 17px; height: 17px; display: block;
+		shape-rendering: crispEdges; fill: currentColor;
+	}
+	.foot-social a:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+	.site-foot .inner > .foot-links:first-child { margin-right: auto; }
+	.foot-links {
+		display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem;
+		font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.02em;
+	}
+	.foot-links a {
+		color: var(--ink); text-decoration: none;
+		border-bottom: 1px solid var(--hair); padding-bottom: 1px;
+	}
+	.foot-links a:hover, .foot-links a:focus-visible { border-color: var(--ink); outline: none; }
+	.foot-links .ext { color: var(--ink-soft); }
+	.foot-legal {
+		width: 100%;
+		font-family: var(--mono); font-size: 0.66rem;
+		letter-spacing: 0.04em; color: var(--ink-soft); margin: 0;
+	}
+
+	
+/* From johnder-com/src/styles/guides.css */
+.crumbs { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 1.2rem; }
+.crumbs a { color: var(--ink-soft); }

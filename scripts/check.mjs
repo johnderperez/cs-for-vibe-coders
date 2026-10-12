@@ -6,7 +6,7 @@ for (const p of pages) {
   const f = `dist/${p}.html`;
   if (!existsSync(f)) { console.error('missing', f); fail++; continue; }
   const h = readFileSync(f, 'utf8');
-  for (const needle of ['<title>', 'name="description"', 'property="og:image"', '<h1']) if (!h.includes(needle)) { console.error(f, 'lacks', needle); fail++; }
+  for (const needle of ['<title>', 'name="description"', 'property="og:image"', '<h1', 'class="site-head"', 'aria-label="Breadcrumb"', 'aria-label="Course breadcrumb"', 'href="/guides"']) if (!h.includes(needle)) { console.error(f, 'lacks', needle); fail++; }
 }
 if (!readFileSync('dist/prompt/index.html','utf8').includes('id="copy"')) { console.error('copy button missing'); fail++; }
 for (const p of pages.slice(1,5)) { const h = readFileSync(`dist/${p}.html`,'utf8'); if (!h.includes('class="checks"') || !h.includes('<details')) { console.error(p, 'lacks checklist or expandable topics'); fail++; } }
