@@ -29,7 +29,7 @@ import { phases } from '../data/phases.js';
   </div></details>
 
   <h2>The four phases</h2>
-  <div class="grid">
+  <div class="grid four">
     {phases.map(p => <a class="card" href={`/${p.slug}`}><span class="n">0{p.num} /</span><h3>{p.title}</h3><p>{p.short}</p></a>)}
   </div>
   <h2>Extras</h2>

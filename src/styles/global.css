@@ -69,8 +69,9 @@ pre code{background:none;border:0;padding:0;color:inherit}
 .status{color:var(--accent);font-weight:700;font-family:var(--mono)}
 .steps{counter-reset:s;list-style:none;padding:0}.steps li{counter-increment:s;padding:.35rem 0 .35rem 2.4rem;position:relative}
 .steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;font-family:var(--mono);color:var(--accent2);font-weight:700}
-.toast{position:fixed;bottom:1rem;left:50%;transform:translate(-50%,150%);background:var(--code);color:#39d353;border:1px solid #39d353;font-family:var(--mono);padding:.6rem 1rem;border-radius:6px;transition:transform .25s;z-index:20;max-width:90vw}
-.toast.on{transform:translate(-50%,0)}
+.toast{position:fixed;bottom:1rem;left:50%;transform:translate(-50%,150%);background:var(--code);color:#39d353;border:1px solid #39d353;font-family:var(--mono);padding:.6rem 1rem;border-radius:6px;transition:transform .25s;z-index:20;max-width:90vw;visibility:hidden}
+.toast.on{transform:translate(-50%,0);visibility:visible}
+.grid.four{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
 .crt body{text-shadow:0 0 4px color-mix(in srgb,var(--accent) 60%,transparent)}
 .crt body::after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);z-index:30}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
