@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cs-for-vibe-coders.vercel.app/sitemap.xml

@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import { phases } from '../data/phases.js';
+---
+<Base>
+  <section class="hero">
+    <p class="eyebrow">Free · Plain English · Self-paced</p>
+    <h1>Computer Science for Vibe Coders</h1>
+    <p class="lead">You can already build apps with Lovable, Cursor, Claude and friends. This course teaches you what's happening underneath, so you can keep the speed and lose the bugs, security holes and "I have no idea why this broke" moments.</p>
+    <div class="actions">
+      <a class="btn" href="/phase-1-machine">Start with Phase 1 →</a>
+      <a class="btn ghost" href="/prompt">Get the CS Coach prompt</a>
+    </div>
+  </section>
+
+  <h2>The idea: from prompting to engineering</h2>
+  <p>Vibe coding (describing what you want and letting AI write the code) is a genuinely great way to prototype. But a prototype and a product are different things. Real apps have to stay secure, stay fast as data grows, and keep working when you change them next month.</p>
+  <p>That's what computer science and software engineering are for. You don't need a degree, and you don't need to stop using AI. You need a working mental model of the machine, the vocabulary to judge the code you're given, and a few habits that keep projects healthy.</p>
+  <p>This course is built around one principle: <strong>use AI as a tutor, not a crutch.</strong> Every phase explains concepts in plain English, shows the specific mistakes AI tools tend to make, and gives you a hands-on checklist to prove you've actually got it.</p>
+
+  <h2>The four phases</h2>
+  <div class="grid">
+    {phases.map(p => <a class="card" href={`/${p.slug}`}><span class="n">Phase {p.num}</span><h3>{p.title}</h3><p>{p.short}</p></a>)}
+  </div>
+  <p>Plus a practical bonus track for people shipping real apps today:</p>
+  <div class="grid">
+    <a class="card" href="/shipping"><span class="n">Bonus track</span><h3>Shipping real apps</h3><p>Git branches, pull requests, CI, secrets, auth, migrations, database security, testing and deploys.</p></a>
+    <a class="card" href="/rules"><span class="n">Habits</span><h3>Rules of engagement</h3><p>Four anti-vibe-coding rules that build real skill.</p></a>
+    <a class="card" href="/prompt"><span class="n">Tool</span><h3>The CS Coach prompt</h3><p>Turn any AI assistant into a patient CS tutor. One-click copy.</p></a>
+  </div>
+
+  <h2>How to use this course</h2>
+  <ol>
+    <li><strong>Set up your tutor.</strong> Copy the <a href="/prompt">CS Coach prompt</a> into Claude, ChatGPT, Grok or your coding tool's custom instructions.</li>
+    <li><strong>Go phase by phase.</strong> Read the topics, then work through the milestone checklist. Ticks are saved in your browser.</li>
+    <li><strong>Apply it to your own app.</strong> Every phase lists mistakes to look for. Hunt for them in something you've built.</li>
+    <li><strong>Ship carefully.</strong> Use the <a href="/shipping">Shipping real apps</a> checklist before you put anything with real users or real data online.</li>
+  </ol>
+
+  <h2>Who this is for</h2>
+  <p>Founders, designers, marketers, realtors, students, anyone who has built something with AI and wants to understand it well enough to trust it. If you've ever pasted an error back into a chat five times in a row, this is for you.</p>
+  <p class="muted">Estimated pace: a few hours a week. Phase 1 takes about 4–6 weeks alongside CS50x; the whole path takes a few months. Go at your own speed.</p>
+</Base>

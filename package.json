@@ -1,0 +1,22 @@
+{
+  "name": "cs-for-vibe-coders",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "node scripts/check.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "astro": "^5.18.2"
+  },
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18.20.8"
+  }
+}

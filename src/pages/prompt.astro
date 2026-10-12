@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import { prompt } from '../data/prompt.js';
+---
+<Base title="The CS Coach prompt" description="Copy the CS Coach system prompt into Claude, ChatGPT, Grok or Cursor to turn your AI into a patient computer science tutor.">
+  <p class="eyebrow">Tool</p>
+  <h1>The CS Coach prompt</h1>
+  <p class="lead">Paste this into your AI assistant and it stops handing you finished code. Instead it explains the concept, asks you questions, and gives you small pieces to work through yourself.</p>
+  <div class="copyrow">
+    <button class="btn" id="copy" type="button">Copy prompt</button>
+    <span id="status" class="status" role="status" aria-live="polite"></span>
+  </div>
+  <pre id="prompt-text" tabindex="0" aria-label="CS Coach prompt text"><code>{prompt}</code></pre>
+
+  <h2>Where to paste it</h2>
+  <ul>
+    <li><strong>Claude:</strong> create a Project and paste it into the project instructions, or paste it as your first message.</li>
+    <li><strong>ChatGPT:</strong> create a custom GPT, or put it in Settings → Personalization → Custom instructions.</li>
+    <li><strong>Grok or any chat assistant:</strong> paste it as the first message of a new chat.</li>
+    <li><strong>Cursor:</strong> add it as a project rule (a file in <code>.cursor/rules</code>) for a "learning mode" project.</li>
+  </ul>
+  <h2>Tips</h2>
+  <ul>
+    <li>Use a separate "learning" chat or project. Keep your normal fast-build setup for when you're shipping.</li>
+    <li>Tell it which phase you're on, e.g. "I'm on Phase 2. Quiz me on Big-O using code from my app."</li>
+    <li>If it starts writing full files again, remind it: "Stick to the 4-step protocol."</li>
+  </ul>
+  <script>
+    const btn = document.getElementById('copy');
+    const status = document.getElementById('status');
+    const text = document.getElementById('prompt-text').innerText;
+    btn.addEventListener('click', async () => {
+      let ok = false;
+      try { await navigator.clipboard.writeText(text); ok = true; } catch {
+        const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly',''); ta.style.position='absolute'; ta.style.left='-9999px';
+        document.body.appendChild(ta); ta.select(); try { ok = document.execCommand('copy'); } catch {} ta.remove();
+      }
+      btn.textContent = ok ? 'Copied ✓' : 'Copy prompt';
+      status.textContent = ok ? 'Prompt copied to your clipboard.' : 'Copy failed. Select the text below and copy it manually.';
+      setTimeout(() => { btn.textContent = 'Copy prompt'; }, 2500);
+    });
+  </script>
+</Base>
