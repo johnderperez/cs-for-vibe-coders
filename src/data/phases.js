@@ -1,6 +1,8 @@
 export const phases = [
 {
-  slug: "phase-1-machine",
+  slug: "how-computers-work",
+  old: "phase-1-machine",
+  name: "How Computers Actually Work",
   num: 1,
   title: "The Machine Mental Model",
   short: "How computers actually run your code",
@@ -30,7 +32,7 @@ export const phases = [
     "Open your browser's DevTools Memory or Performance tab and record a profile of your own app."
   ],
   reading: [
-    { t: "Code: The Hidden Language of Computer Hardware and Software (Charles Petzold)", u: "https://www.codehiddenlanguage.com/", n: "The core book for this phase. Builds a computer up from light switches. Very readable." },
+    { t: "Code: The Hidden Language of Computer Hardware and Software (Charles Petzold)", u: "https://www.codehiddenlanguage.com/", n: "The core book for this track. Builds a computer up from light switches. Very readable." },
     { t: "Harvard CS50x (free)", u: "https://cs50.harvard.edu/x/", n: "The hands-on milestone. Free lectures, problem sets and an auto-grader." },
     { t: "Nand2Tetris (free)", u: "https://www.nand2tetris.org/", n: "Optional deep dive: build a computer from logic gates up to a working program." },
     { t: "MDN: JavaScript memory management", u: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management", n: "How garbage collection works in the language most vibe-coded apps use." },
@@ -39,12 +41,14 @@ export const phases = [
   ]
 },
 {
-  slug: "phase-2-algorithms",
+  slug: "algorithms-and-data",
+  old: "phase-2-algorithms",
+  name: "Thinking in Algorithms & Data",
   num: 2,
   title: "Algorithms & Data Structures",
   short: "Why code is slow, and how to organize data",
   goal: "Understand why some code runs slowly and how to pick the right shape for your data.",
-  intro: "AI tools write code that works on the demo data. Algorithms and data structures are about what happens when the data gets real: 10,000 listings, 50 users clicking at once, a list that keeps growing. This phase gives you the vocabulary to spot slow code before your users do.",
+  intro: "AI tools write code that works on the demo data. Algorithms and data structures are about what happens when the data gets real: 10,000 listings, 50 users clicking at once, a list that keeps growing. This track gives you the vocabulary to spot slow code before your users do.",
   topics: [
     { h: "Big-O notation (time and space)", p: "Big-O describes how work grows as your data grows. O(1): same speed no matter the size (looking up a key in a map). O(n): work grows in step with the data (one pass through a list). O(n²): a loop inside a loop. 1,000 items means 1,000,000 steps. O(log n): halve the problem each step (binary search).", why: "Ask the AI 'what's the Big-O of this?' for any loop over user data. Nested loops over two lists are the number-one cause of 'it was fast in dev, slow in prod'." },
     { h: "Arrays, linked lists, stacks and queues", p: "An array is a row of numbered boxes: instant to read by position, slow to insert in the middle. A linked list is a chain where each item points to the next. A stack is last-in-first-out (undo history). A queue is first-in-first-out (a job queue, a waiting line).", why: "Background jobs, emails to send, retry logic and undo buttons are all stacks and queues in disguise." },
@@ -69,7 +73,7 @@ export const phases = [
     "Draw (on paper) the tree or graph hiding in one feature of your app."
   ],
   reading: [
-    { t: "Grokking Algorithms (Aditya Bhargava)", u: "https://www.manning.com/books/grokking-algorithms-second-edition", n: "The core book for this phase. Illustrated, friendly, no heavy math." },
+    { t: "Grokking Algorithms (Aditya Bhargava)", u: "https://www.manning.com/books/grokking-algorithms-second-edition", n: "The core book for this track. Illustrated, friendly, no heavy math." },
     { t: "VisuAlgo", u: "https://visualgo.net/", n: "Animated visualizations of sorting, trees, graphs and more." },
     { t: "NeetCode Roadmap", u: "https://neetcode.io/roadmap", n: "A structured order to tackle practice problems, with free video explanations." },
     { t: "LeetCode problem set", u: "https://leetcode.com/problemset/", n: "Where to do the 30-problem milestone. Filter by Easy first." },
@@ -78,7 +82,9 @@ export const phases = [
   ]
 },
 {
-  slug: "phase-3-engineering",
+  slug: "code-that-lasts",
+  old: "phase-3-engineering",
+  name: "Writing Code That Lasts",
   num: 3,
   title: "Software Engineering & Clean Architecture",
   short: "Code that humans (and future you) can maintain",
@@ -118,7 +124,9 @@ export const phases = [
   ]
 },
 {
-  slug: "phase-4-systems",
+  slug: "building-for-scale",
+  old: "phase-4-systems",
+  name: "Building for Scale",
   num: 4,
   title: "Systems & Scale",
   short: "Backends, databases and architecture",
@@ -158,3 +166,6 @@ export const phases = [
   ]
 }
 ];
+
+export const slugify = s => s.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+export const topicSlug = t => slugify(t.h.split(':')[0]).split('-').slice(0,4).join('-');

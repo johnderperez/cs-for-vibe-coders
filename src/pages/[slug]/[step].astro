@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import Quiz from '../../components/Quiz.astro';
+import { phases } from '../../data/phases.js';
+import { steps } from '../../data/activities.js';
+import { md } from '../../data/md.js';
+export function getStaticPaths() {
+  return phases.flatMap(p => p.topics.map((t, i) => ({ params: { slug: p.slug, step: steps[p.slug][i].s }, props: { p, t, i, st: steps[p.slug] } })));
+}
+const { p, t, i, st } = Astro.props;
+const quiz = st[i];
+const n = p.topics.length;
+const prev = i > 0 ? { href: `/${p.slug}/${st[i-1].s}`, label: p.topics[i-1].h } : null;
+const next = i < n - 1 ? { href: `/${p.slug}/${st[i+1].s}`, label: p.topics[i+1].h } : null;
+const plain = t.p.replace(/`/g, '');
+---
+<Base title={`${t.h} | ${p.name}`} description={plain.length > 155 ? plain.slice(0, 152) + '…' : plain}>
+  <p class="eyebrow"><a href={`/${p.slug}`}>{p.name}</a> · Step {i + 1} of {n}</p>
+  <div class="bar-progress" aria-hidden="true"><span style={`width:${((i + 1) / n) * 100}%`}></span></div>
+  <h1>{t.h}</h1>
+  <section class="topic"><p set:html={md(t.p)} /></section>
+  <p class="why"><strong>Why it matters when you build with AI:</strong> <span set:html={md(t.why)} /></p>
+  <Quiz q={quiz.q} o={quiz.o} a={quiz.a} x={quiz.x} id="quiz" />
+  <div class="pager" data-step={`${p.slug}/${quiz.s}`}>
+    {prev ? <a class="btn ghost" href={prev.href}>← Previous step</a> : <a class="btn ghost" href={`/${p.slug}`}>← Track overview</a>}
+    {next ? <a class="btn" href={next.href}>Next: {next.label} →</a> : <a class="btn" href={`/${p.slug}#activity`}>Finish: try the challenge →</a>}
+  </div>
+</Base>

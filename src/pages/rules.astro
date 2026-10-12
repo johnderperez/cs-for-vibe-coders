@@ -2,30 +2,29 @@
 import Base from '../layouts/Base.astro';
 ---
 <Base title="Rules of Engagement" description="Four anti-vibe-coding rules that turn AI from a crutch into a tutor: the 15-minute rule, line-by-line comprehension, manual typing and docs first.">
-  <p class="eyebrow">man vibe-coding <span class="dim">// habits</span></p>
+  <p class="eyebrow">Habits</p>
   <h1>The anti-vibe-coding rules of engagement</h1>
-  <p class="tldr"><b>TL;DR</b>Debug 15 min first. Understand every line. Type it yourself. Docs beat the LLM.</p>
-  <details><summary><span class="t">Why bother?</span></summary><div class="body"><p>These four rules are what turn "the AI built it" into "I built it, with AI's help." They feel slower at first. Within a few weeks they make you much faster, because you stop going in circles.</p></div></details>
+  <p class="lead">These four rules are what turn "the AI built it" into "I built it, with AI's help." They feel slower at first. Within a few weeks they make you much faster, because you stop going in circles.</p>
 
-  <details><summary><span class="t">1. The 15-minute rule</span><span class="s">Fight the bug yourself for 15 minutes before asking AI.</span></summary><div class="body">
+  <section class="topic"><h2>1. The 15-minute rule</h2>
   <p>When something breaks, spend at least 15 minutes debugging it yourself before handing the error to AI. Read the full error message. Check the logs. Add a <code>console.log</code> or <code>print</code> to see what the values actually are. Look it up in the documentation.</p>
-  <p class="why"><strong>why:</strong> Debugging is the skill. Pasting errors back and forth trains you to wait; investigating trains you to understand. And when you do ask the AI, you'll ask a much better question.</p>
-  <p><strong class="dim">try this →</strong> Before asking for help, write down (1) what you expected, (2) what actually happened, (3) what you've already ruled out.</p></div></details>
+  <p class="why"><strong>Why:</strong> Debugging is the skill. Pasting errors back and forth trains you to wait; investigating trains you to understand. And when you do ask the AI, you'll ask a much better question.</p>
+  <p><strong>Try this:</strong> Before asking for help, write down (1) what you expected, (2) what actually happened, (3) what you've already ruled out.</p></section>
 
-  <details><summary><span class="t">2. Line-by-line comprehension</span><span class="s">If you can't explain a line, it doesn't go in.</span></summary><div class="body">
+  <section class="topic"><h2>2. Line-by-line comprehension</h2>
   <p>Never accept AI-generated code into your project unless you can explain what every line does in plain English. If you can't, ask the AI to explain it, then check the explanation against the docs.</p>
-  <p class="why"><strong>why:</strong> Code you don't understand is code you can't debug, secure or change. It's also where the dangerous stuff hides: a disabled security check, a leaked key, a query that returns everyone's data.</p>
-  <p><strong class="dim">try this →</strong> On each pull request, leave yourself a one-line comment explaining any part that surprised you.</p></div></details>
+  <p class="why"><strong>Why:</strong> Code you don't understand is code you can't debug, secure or change. It's also where the dangerous stuff hides: a disabled security check, a leaked key, a query that returns everyone's data.</p>
+  <p><strong>Try this:</strong> On each pull request, leave yourself a one-line comment explaining any part that surprised you.</p></section>
 
-  <details><summary><span class="t">3. The manual typing mandate</span><span class="s">While learning, type it. Don't paste it.</span></summary><div class="body">
+  <section class="topic"><h2>3. The manual typing mandate</h2>
   <p>While you're learning, type code out yourself instead of copy-pasting it. Yes, really.</p>
-  <p class="why"><strong>why:</strong> Typing forces you to read every character. You'll notice the odd bracket, the missing <code>await</code>, the variable that's never used. It builds the muscle memory that makes syntax stop feeling foreign.</p>
-  <p><strong class="dim">try this →</strong> Use it for the small, important bits: auth checks, database queries, the core logic. Let AI handle boilerplate once you've typed it a few times.</p></div></details>
+  <p class="why"><strong>Why:</strong> Typing forces you to read every character. You'll notice the odd bracket, the missing <code>await</code>, the variable that's never used. It builds the muscle memory that makes syntax stop feeling foreign.</p>
+  <p><strong>Try this:</strong> Use it for the small, important bits: auth checks, database queries, the core logic. Let AI handle boilerplate once you've typed it a few times.</p></section>
 
-  <details><summary><span class="t">4. Docs first, LLM second</span><span class="s">Official docs are the source of truth.</span></summary><div class="body">
+  <section class="topic"><h2>4. Docs first, LLM second</h2>
   <p>Treat official documentation (<a href="https://developer.mozilla.org/" rel="noopener">MDN</a>, <a href="https://docs.python.org/3/" rel="noopener">Python docs</a>, <a href="https://www.postgresql.org/docs/current/" rel="noopener">PostgreSQL docs</a>, your framework's docs) as the source of truth. Use AI for explaining concepts and connecting ideas, not as the final word on how an API works.</p>
-  <p class="why"><strong>why:</strong> AI models are trained on older code and confidently invent functions and options that don't exist, or that were removed two versions ago. The docs are current and correct.</p>
-  <p><strong class="dim">try this →</strong> When AI suggests a library function you haven't seen, find it in the official docs before using it.</p></div></details>
+  <p class="why"><strong>Why:</strong> AI models are trained on older code and confidently invent functions and options that don't exist, or that were removed two versions ago. The docs are current and correct.</p>
+  <p><strong>Try this:</strong> When AI suggests a library function you haven't seen, find it in the official docs before using it.</p></section>
 
   <h2>Bonus: the standards your CS Coach enforces</h2>
   <ul>

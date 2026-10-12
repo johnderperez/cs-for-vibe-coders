@@ -1,0 +1,13 @@
+---
+import { md } from '../data/md.js';
+const { q, o, a, x, id } = Astro.props;
+---
+<div class="activity quiz" data-answer={a} id={id}>
+  <p class="act-label">Quick check</p>
+  <p class="q" set:html={md(q)} />
+  <div class="opts" role="group" aria-label="Answers">
+    {o.map((opt, i) => <button type="button" class="opt" data-i={i} set:html={md(opt)} />)}
+  </div>
+  <p class="feedback" role="status" aria-live="polite"></p>
+  <p class="explain" hidden set:html={md(x)} />
+</div>
