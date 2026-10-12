@@ -1,0 +1,46 @@
+---
+import { u } from '../../data/url.js';
+import Base from '../../layouts/Base.astro';
+import Activities from '../../components/Activities.astro';
+import { phases } from '../../data/phases.js';
+import { steps } from '../../data/activities.js';
+import { md } from '../../data/md.js';
+export function getStaticPaths() { return phases.map((p, i) => ({ params: { slug: p.slug }, props: { p, prev: phases[i-1], next: phases[i+1] } })); }
+const { p, prev, next } = Astro.props;
+const st = steps[p.slug];
+---
+<Base title={p.name} description={`${p.goal} Short plain-English steps, quick quizzes, common AI-generated mistakes, a milestone checklist and free resources.`}>
+  <p class="eyebrow">Track {p.num} of 4 · {p.topics.length} short steps</p>
+  <h1>{p.name}</h1>
+  <p class="lead"><strong>Goal:</strong> {p.goal}</p>
+  <details class="more"><summary>Why this matters</summary><p>{p.intro}</p></details>
+  <nav aria-label="On this page" class="muted">Jump to: <a href="#steps">Steps</a> · <a href="#activity">Activity</a> · <a href="#mistakes">AI mistakes</a> · <a href="#milestones">Checklist</a> · <a href="#reading">Reading</a></nav>
+
+  <h2 id="steps">The steps</h2>
+  <p class="muted">Each step is a 2-minute read with a quick check at the end.</p>
+  <ol class="steplist">
+    {p.topics.map((t, i) => <li><a class="card" href={u(`/${p.slug}/${st[i].s}`)}><span class="n">Step {i + 1}</span><h3>{t.h}</h3><span class="done" data-done={`${p.slug}/${st[i].s}`}></span></a></li>)}
+  </ol>
+  <a class="btn" href={u(`/${p.slug}/${st[0].s}`)}>Start step 1 →</a>
+
+  <h2 id="activity">Try it</h2>
+  <Activities kind={p.slug === 'algorithms-and-data' ? 'bigo' : 'bug'} slug={p.slug} />
+
+  <h2 id="mistakes">AI mistakes to watch for</h2>
+  <div class="warn"><ul>{p.mistakes.map(m => <li set:html={md(m)} />)}</ul></div>
+  <p class="muted">Tip: paste a file into your AI tool and ask, "Check this for each of these issues and explain any you find." Then verify what it says yourself.</p>
+
+  <h2 id="milestones">Milestone checklist</h2>
+  <p class="muted">Your ticks are saved in this browser only. <span class="progress" data-progress={p.slug}></span></p>
+  <ul class="checks" data-key={p.slug}>
+    {p.milestones.map((m, i) => <li><input type="checkbox" id={`${p.slug}-${i}`} /><label for={`${p.slug}-${i}`} set:html={md(m)} /></li>)}
+  </ul>
+
+  <h2 id="reading">Reading &amp; free resources</h2>
+  <ul class="res">{p.reading.map(r => <li><a href={r.u} rel="noopener" target="_blank">{r.t}</a><span set:html={md(r.n)} /></li>)}</ul>
+
+  <div class="pager">
+    {prev ? <a class="btn ghost" href={u(`/${prev.slug}`)}>← {prev.name}</a> : <a class="btn ghost" href={u("/")}>← Home</a>}
+    {next ? <a class="btn" href={u(`/${next.slug}`)}>Next: {next.name} →</a> : <a class="btn" href={u("/shipping")}>Next: Shipping real apps →</a>}
+  </div>
+</Base>

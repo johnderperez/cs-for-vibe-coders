@@ -1,0 +1,40 @@
+---
+import { bigO, bugs, order } from '../data/activities.js';
+import { md } from '../data/md.js';
+const { kind, slug } = Astro.props;
+const bug = bugs[slug];
+const levels = ['O(1)','O(log n)','O(n)','O(n log n)','O(n²)'];
+const shuffled = [...order.items].map((t, i) => ({ t, i })).sort((a, b) => ((a.i * 7 + 3) % 6) - ((b.i * 7 + 3) % 6));
+---
+{kind === 'bigo' && (
+  <div class="activity bigo" id="bigo">
+    <p class="act-label">Game: guess the Big-O</p>
+    <p>What's the cost of each line as the data grows? Score: <strong class="score">0</strong>/{bigO.length}</p>
+    {bigO.map((r, i) => (
+      <div class="bigo-row" data-a={r.a}>
+        <pre><code>{r.c}</code></pre>
+        <div class="opts" role="group" aria-label={`Big-O for example ${i + 1}`}>{levels.map(l => <button type="button" class="opt" data-v={l}>{l}</button>)}</div>
+        <p class="feedback" role="status" aria-live="polite"></p>
+      </div>
+    ))}
+  </div>
+)}
+{kind === 'bug' && bug && (
+  <div class="activity bug" data-bad={bug.bad}>
+    <p class="act-label">Challenge: {bug.title}</p>
+    <p>Click the line with the bug.</p>
+    <ol class="codelines">{bug.lines.map((l, i) => <li><button type="button" class="line" data-i={i}><code>{l}</code></button></li>)}</ol>
+    <p class="feedback" role="status" aria-live="polite"></p>
+    <p class="explain" hidden set:html={md(bug.x)} />
+  </div>
+)}
+{kind === 'order' && (
+  <div class="activity order">
+    <p class="act-label">Challenge: {order.title}</p>
+    <p>Tap the steps in the order they should happen.</p>
+    <div class="opts">{shuffled.map(s => <button type="button" class="opt" data-i={s.i}>{s.t}</button>)}</div>
+    <ol class="picked"></ol>
+    <p class="feedback" role="status" aria-live="polite"></p>
+    <button type="button" class="btn ghost reset">Reset</button>
+  </div>
+)}

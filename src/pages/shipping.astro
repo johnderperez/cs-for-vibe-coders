@@ -1,37 +1,39 @@
 ---
+import { u } from '../data/url.js';
 import Base from '../layouts/Base.astro';
+import Activities from '../components/Activities.astro';
 const sections = [
- { id:'git', tl:'Branch → PR → CI → merge. Never straight to main.', h:'Git branches, pull requests and CI', p:[
+ { id:'git', h:'Git branches, pull requests and CI', p:[
    'Never work directly on <code>main</code>. Make a branch for each change (<code>git switch -c fix-login</code>), commit small steps, push it, and open a pull request (PR). A PR is a page showing exactly what changed, where you (or a teammate, or an AI reviewer) can read it before it goes live.',
    'CI (continuous integration) is a robot that runs your checks on every PR: install, type-check, lint, test, build. If anything fails, you see a red X before it reaches users. GitHub Actions is free for public repos and an easy place to start.'],
    checks:['Branch protection on <code>main</code>: require a PR and passing checks before merging.','A CI workflow that runs the build and tests on every pull request.','Small PRs with clear titles. One change per PR.','Commit before every big AI prompt, so you can always roll back.'],
    ai:'AI agents love to "helpfully" edit 30 files at once. Keep them on a branch and review the diff before merging.' },
- { id:'secrets', tl:'Secrets live in env vars, never in code or the browser.', h:'Environment variables and secrets', p:[
+ { id:'secrets', h:'Environment variables and secrets', p:[
    'API keys, database passwords and tokens are secrets. They belong in environment variables (a <code>.env</code> file locally, and your host\'s settings in production), never in your code or Git history.',
    'Know which keys are safe in the browser. Anything in frontend code is public: anyone can open DevTools and read it. Variables prefixed <code>NEXT_PUBLIC_</code>, <code>VITE_</code> or <code>PUBLIC_</code> end up in the browser. A Supabase "anon"/publishable key is designed to be public (if RLS is on); a "service role" or secret key must never be.'],
    checks:['<code>.env</code> is in <code>.gitignore</code>.','No secret keys in frontend code or public env variable prefixes.','Separate keys for development and production.','If a key ever got committed, rotate it (make a new one and revoke the old). Deleting the file is not enough.'],
    ai:'AI tools sometimes paste a key straight into a file "to make it work", or put a server key in a client component.' },
- { id:'auth', tl:'Check permissions on the server, every time.', h:'Authentication and authorization', p:[
+ { id:'auth', h:'Authentication and authorization', p:[
    'Authentication proves who someone is (login). Authorization decides what they can do. Use a proven auth provider (Supabase Auth, Clerk, Auth0, your framework\'s official library) instead of rolling your own password storage.',
    'The golden rule: <strong>check permissions on the server or in the database, every time.</strong> Hiding a button in the UI is decoration, not security.'],
    checks:['Every API route and server function checks who is calling and whether they are allowed.','Passwords are never stored by you in plain text (let the auth provider handle it).','Sessions expire and logout actually works.','Admin-only actions are enforced on the server, not just hidden in the UI.'],
    ai:'Generated code often checks <code>if (user)</code> (logged in?) when it should check <code>if (user.id === record.owner_id)</code> (allowed?).' },
- { id:'migrations', tl:'Every schema change is a file in Git.', h:'Database migrations', p:[
+ { id:'migrations', h:'Database migrations', p:[
    'A migration is a small, numbered file describing one change to your database structure ("add a <code>phone</code> column to <code>agents</code>"). They live in Git with your code, run in order, and let you rebuild the database exactly on any machine.',
    'Clicking around in a database dashboard to change tables in production is how environments drift apart and how data gets lost.'],
    checks:['Every schema change is a migration file in the repo.','Migrations are tested on a dev/preview database before production.','Back up production before risky migrations.','Destructive changes (dropping columns or tables) are done in steps, after the code no longer uses them.'],
    ai:'Ask the AI to write the migration as a file, read it, then apply it. Never let an agent run raw <code>DROP</code> statements against production.' },
- { id:'rls', tl:"The database itself must block other users' rows.", h:'Row Level Security and security basics', p:[
+ { id:'rls', h:'Row Level Security and security basics', p:[
    'If your frontend talks directly to the database (common with Supabase and Firebase), the database itself must enforce who can see which rows. In Postgres that\'s Row Level Security (RLS): rules like "a user can only read rows where <code>user_id = auth.uid()</code>".',
    'Then cover the basics from the OWASP Top 10: validate all input on the server, use parameterized queries (never glue user text into SQL), rate-limit logins and forms, and keep dependencies updated.'],
    checks:['RLS is enabled on every table exposed to the client.','No policy that just says <code>true</code> for everyone unless the data is truly public.','Test it: logged in as user A, try to read and edit user B\'s data. It must fail.','Input is validated on the server (e.g. with a schema library like Zod).','File uploads are restricted by type and size, with private storage for private files.'],
    ai:'The most common serious flaw in vibe-coded apps: RLS disabled, or "fixed" by allowing everything when a query failed.' },
- { id:'testing', tl:'Test what would hurt most if it broke.', h:'Testing', p:[
+ { id:'testing', h:'Testing', p:[
    'You don\'t need 100% coverage on day one. Start with the things that would hurt most if they broke: sign-up and login, payments, permissions, and your core feature.',
    'Unit tests check logic (pricing math, date handling). Integration tests check your API plus database. One or two end-to-end tests (Playwright) click through the main flow in a real browser.'],
    checks:['Tests run in CI on every PR.','At least one end-to-end test of the critical path (sign up → do the main thing).','A test that proves a user can\'t access someone else\'s data.','When you fix a bug, add a test that would have caught it.'],
    ai:'Watch for AI "fixing" a failing test by changing the test instead of the code.' },
- { id:'deploys', tl:'Deploy from main after CI. Know how to roll back.', h:'Deploys', p:[
+ { id:'deploys', h:'Deploys', p:[
    'Modern hosts (Vercel, Netlify, Cloudflare, Render) deploy automatically from Git: every PR gets a preview URL, and merging to <code>main</code> deploys production. Use the preview to check changes before they go live.',
    'Know how to roll back. Every good host keeps previous deployments, so you can instantly switch back to the last working version.'],
    checks:['Production deploys only from <code>main</code>, after CI passes.','Preview deployments for every PR.','You know how to roll back in under two minutes.','Error monitoring (e.g. Sentry) or at least readable logs in production.','A custom domain with HTTPS, and email sending (SPF/DKIM) set up if your app sends mail.'],
@@ -39,23 +41,20 @@ const sections = [
 ];
 ---
 <Base title="Shipping real apps" description="A practical checklist for vibe coders shipping real apps: Git branches, PRs and CI, secrets, auth, database migrations, Row Level Security, testing and deploys.">
-  <p class="eyebrow">git push --production <span class="dim">// bonus track</span></p>
+  <p class="eyebrow">Bonus track</p>
   <h1>Shipping real apps</h1>
-  <p class="tldr"><b>TL;DR</b>Real users soon? Tick these 7 checklists before launch, and again after anything big.</p>
-  <nav aria-label="On this page" class="toc">{sections.map(s => <a href={`#${s.id}`}>{s.id}</a>)}</nav>
+  <p class="lead">The CS tracks build understanding over months. This page is what you need today if real people are about to use something you built. Work through it before launch, and again every time you add something big.</p>
+  <nav aria-label="On this page" class="muted">Jump to: {sections.map((s, i) => <>{i ? ' · ' : ''}<a href={`#${s.id}`}>{s.h}</a></>)}</nav>
+  <Activities kind="order" />
   {sections.map(s => (
     <section>
       <h2 id={s.id}>{s.h}</h2>
-      <p class="muted">{s.tl}</p>
-      <p class="progress" data-progress={`ship-${s.id}`} aria-live="polite"></p>
+      {s.p.map(x => <p set:html={x} />)}
+      <p class="why"><strong>Watch the AI:</strong> <span set:html={s.ai} /></p>
       <ul class="checks" data-key={`ship-${s.id}`}>{s.checks.map((c, i) => <li><input type="checkbox" id={`ship-${s.id}-${i}`} /><label for={`ship-${s.id}-${i}`} set:html={c} /></li>)}</ul>
-      <details><summary><span class="t">Explain it</span><span class="s">The why, plus what AI tends to get wrong.</span></summary><div class="body">
-        {s.p.map(x => <p set:html={x} />)}
-        <p class="why"><strong>watch the AI:</strong> <span set:html={s.ai} /></p>
-      </div></details>
     </section>
   ))}
-  <h2>Docs worth bookmarking</h2>
+  <h2>Official docs worth bookmarking</h2>
   <ul class="res">
     <li><a href="https://docs.github.com/en/get-started/using-github/github-flow" rel="noopener" target="_blank">GitHub flow</a><span>The branch → PR → merge workflow, explained by GitHub.</span></li>
     <li><a href="https://docs.github.com/en/actions" rel="noopener" target="_blank">GitHub Actions docs</a><span>Set up CI for your repo.</span></li>
@@ -66,5 +65,5 @@ const sections = [
     <li><a href="https://vercel.com/docs/environment-variables" rel="noopener" target="_blank">Vercel: Environment variables</a><span>Managing secrets per environment.</span></li>
     <li><a href="https://playwright.dev/" rel="noopener" target="_blank">Playwright</a><span>End-to-end testing in real browsers.</span></li>
   </ul>
-  <div class="pager"><a class="btn ghost" href="/phase-4-systems">← Phase 4: Systems &amp; Scale</a><a class="btn" href="/rules">Rules of engagement →</a></div>
+  <div class="pager"><a class="btn ghost" href={u("/building-for-scale")}>← Building for Scale</a><a class="btn" href={u("/rules")}>Rules of engagement →</a></div>
 </Base>
