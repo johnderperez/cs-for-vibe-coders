@@ -12,3 +12,6 @@ npm run check   # verify every page built with SEO tags
 ```
 
 Workflow: branch → pull request → CI → merge. `main` auto-deploys.
+
+## Switching the domain
+Edit `DEFAULT_SITE_URL` in `site.config.mjs` (or set `SITE_URL` in Vercel env) and redeploy. Canonical, OG and sitemap URLs all follow it.
