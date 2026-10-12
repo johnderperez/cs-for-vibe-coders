@@ -1,4 +1,5 @@
 ---
+import { u } from '../data/url.js';
 import Base from '../layouts/Base.astro';
 import { phases } from '../data/phases.js';
 ---
@@ -8,8 +9,8 @@ import { phases } from '../data/phases.js';
     <h1>Computer Science for Vibe Coders</h1>
     <p class="lead">You can already build apps with Lovable, Cursor, Claude and friends. This course teaches you what's happening underneath, so you can keep the speed and lose the bugs, security holes and "I have no idea why this broke" moments.</p>
     <div class="actions">
-      <a class="btn" href="/how-computers-work">Start: How Computers Actually Work →</a>
-      <a class="btn ghost" href="/prompt">Get the CS Coach prompt</a>
+      <a class="btn" href={u("/how-computers-work")}>Start: How Computers Actually Work →</a>
+      <a class="btn ghost" href={u("/prompt")}>Get the CS Coach prompt</a>
     </div>
   </section>
 
@@ -20,21 +21,21 @@ import { phases } from '../data/phases.js';
 
   <h2>The four tracks</h2>
   <div class="grid">
-    {phases.map(p => <a class="card" href={`/${p.slug}`}><span class="n">Track {p.num} · {p.topics.length} steps</span><h3>{p.name}</h3><p>{p.short}</p></a>)}
+    {phases.map(p => <a class="card" href={u(`/${p.slug}`)}><span class="n">Track {p.num} · {p.topics.length} steps</span><h3>{p.name}</h3><p>{p.short}</p></a>)}
   </div>
   <p>Plus a practical bonus track for people shipping real apps today:</p>
   <div class="grid">
-    <a class="card" href="/shipping"><span class="n">Bonus track</span><h3>Shipping real apps</h3><p>Git branches, pull requests, CI, secrets, auth, migrations, database security, testing and deploys.</p></a>
-    <a class="card" href="/rules"><span class="n">Habits</span><h3>Rules of engagement</h3><p>Four anti-vibe-coding rules that build real skill.</p></a>
-    <a class="card" href="/prompt"><span class="n">Tool</span><h3>The CS Coach prompt</h3><p>Turn any AI assistant into a patient CS tutor. One-click copy.</p></a>
+    <a class="card" href={u("/shipping")}><span class="n">Bonus track</span><h3>Shipping real apps</h3><p>Git branches, pull requests, CI, secrets, auth, migrations, database security, testing and deploys.</p></a>
+    <a class="card" href={u("/rules")}><span class="n">Habits</span><h3>Rules of engagement</h3><p>Four anti-vibe-coding rules that build real skill.</p></a>
+    <a class="card" href={u("/prompt")}><span class="n">Tool</span><h3>The CS Coach prompt</h3><p>Turn any AI assistant into a patient CS tutor. One-click copy.</p></a>
   </div>
 
   <h2>How to use this course</h2>
   <ol>
-    <li><strong>Set up your tutor.</strong> Copy the <a href="/prompt">CS Coach prompt</a> into Claude, ChatGPT, Grok or your coding tool's custom instructions.</li>
+    <li><strong>Set up your tutor.</strong> Copy the <a href={u("/prompt")}>CS Coach prompt</a> into Claude, ChatGPT, Grok or your coding tool's custom instructions.</li>
     <li><strong>Go track by track.</strong> Each track is split into short steps with a quick quiz, a hands-on challenge and a milestone checklist. Ticks are saved in your browser.</li>
     <li><strong>Apply it to your own app.</strong> Every track lists mistakes to look for. Hunt for them in something you've built.</li>
-    <li><strong>Ship carefully.</strong> Use the <a href="/shipping">Shipping real apps</a> checklist before you put anything with real users or real data online.</li>
+    <li><strong>Ship carefully.</strong> Use the <a href={u("/shipping")}>Shipping real apps</a> checklist before you put anything with real users or real data online.</li>
   </ol>
 
   <h2>Who this is for</h2>

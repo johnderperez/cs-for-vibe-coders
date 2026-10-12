@@ -1,4 +1,4 @@
-// Single place to change the public URL. When csforvibecoders.com is live,
-// change DEFAULT_SITE_URL (or set the SITE_URL env var in Vercel) and redeploy.
-export const DEFAULT_SITE_URL = 'https://computer-science-for-vibe-coders.vercel.app';
-export const SITE_URL = process.env.SITE_URL || DEFAULT_SITE_URL;
+// Single place for the public address. The course is served at johnder.com/computer-science-for-vibe-coders
+// (johnder.com proxies that path to this Vercel project). Change SITE_URL / BASE_PATH here or via env vars.
+export const SITE_URL = process.env.SITE_URL || 'https://johnder.com';
+export const BASE_PATH = process.env.BASE_PATH ?? '/computer-science-for-vibe-coders';

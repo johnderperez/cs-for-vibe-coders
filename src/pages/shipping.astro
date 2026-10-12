@@ -1,4 +1,5 @@
 ---
+import { u } from '../data/url.js';
 import Base from '../layouts/Base.astro';
 import Activities from '../components/Activities.astro';
 const sections = [
@@ -64,5 +65,5 @@ const sections = [
     <li><a href="https://vercel.com/docs/environment-variables" rel="noopener" target="_blank">Vercel: Environment variables</a><span>Managing secrets per environment.</span></li>
     <li><a href="https://playwright.dev/" rel="noopener" target="_blank">Playwright</a><span>End-to-end testing in real browsers.</span></li>
   </ul>
-  <div class="pager"><a class="btn ghost" href="/building-for-scale">← Building for Scale</a><a class="btn" href="/rules">Rules of engagement →</a></div>
+  <div class="pager"><a class="btn ghost" href={u("/building-for-scale")}>← Building for Scale</a><a class="btn" href={u("/rules")}>Rules of engagement →</a></div>
 </Base>

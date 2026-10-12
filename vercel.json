@@ -22,7 +22,7 @@
       ]
     },
     {
-      "source": "/_astro/(.*)",
+      "source": "/computer-science-for-vibe-coders/_astro/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -33,24 +33,44 @@
   ],
   "redirects": [
     {
-      "source": "/phase-1-machine",
-      "destination": "/how-computers-work",
+      "source": "/",
+      "destination": "/computer-science-for-vibe-coders",
+      "permanent": false
+    },
+    {
+      "source": "/computer-science-for-vibe-coders/phase-1-machine",
+      "destination": "/computer-science-for-vibe-coders/how-computers-work",
       "permanent": true
     },
     {
-      "source": "/phase-2-algorithms",
-      "destination": "/algorithms-and-data",
+      "source": "/computer-science-for-vibe-coders/phase-2-algorithms",
+      "destination": "/computer-science-for-vibe-coders/algorithms-and-data",
       "permanent": true
     },
     {
-      "source": "/phase-3-engineering",
-      "destination": "/code-that-lasts",
+      "source": "/computer-science-for-vibe-coders/phase-3-engineering",
+      "destination": "/computer-science-for-vibe-coders/code-that-lasts",
       "permanent": true
     },
     {
-      "source": "/phase-4-systems",
-      "destination": "/building-for-scale",
+      "source": "/computer-science-for-vibe-coders/phase-4-systems",
+      "destination": "/computer-science-for-vibe-coders/building-for-scale",
       "permanent": true
+    },
+    {
+      "source": "/:path((?!computer-science-for-vibe-coders).+)",
+      "destination": "/computer-science-for-vibe-coders/:path",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/computer-science-for-vibe-coders",
+      "destination": "/"
+    },
+    {
+      "source": "/computer-science-for-vibe-coders/:path*",
+      "destination": "/:path*"
     }
   ]
 }

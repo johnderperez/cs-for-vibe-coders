@@ -1,4 +1,5 @@
 ---
+import { u } from '../data/url.js';
 import Base from '../layouts/Base.astro';
 ---
 <Base title="Rules of Engagement" description="Four anti-vibe-coding rules that turn AI from a crutch into a tutor: the 15-minute rule, line-by-line comprehension, manual typing and docs first.">
@@ -33,5 +34,5 @@ import Base from '../layouts/Base.astro';
     <li><strong>Tests for every feature.</strong> Unit tests for logic, integration tests for pieces working together.</li>
     <li><strong>Architecture, data and security before UI polish.</strong> A pretty screen on top of a leaky database is still a leak.</li>
   </ul>
-  <div class="pager"><a class="btn ghost" href="/shipping">← Shipping real apps</a><a class="btn" href="/prompt">Get the CS Coach prompt →</a></div>
+  <div class="pager"><a class="btn ghost" href={u("/shipping")}>← Shipping real apps</a><a class="btn" href={u("/prompt")}>Get the CS Coach prompt →</a></div>
 </Base>

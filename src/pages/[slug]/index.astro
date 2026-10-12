@@ -1,4 +1,5 @@
 ---
+import { u } from '../../data/url.js';
 import Base from '../../layouts/Base.astro';
 import Activities from '../../components/Activities.astro';
 import { phases } from '../../data/phases.js';
@@ -18,9 +19,9 @@ const st = steps[p.slug];
   <h2 id="steps">The steps</h2>
   <p class="muted">Each step is a 2-minute read with a quick check at the end.</p>
   <ol class="steplist">
-    {p.topics.map((t, i) => <li><a class="card" href={`/${p.slug}/${st[i].s}`}><span class="n">Step {i + 1}</span><h3>{t.h}</h3><span class="done" data-done={`${p.slug}/${st[i].s}`}></span></a></li>)}
+    {p.topics.map((t, i) => <li><a class="card" href={u(`/${p.slug}/${st[i].s}`)}><span class="n">Step {i + 1}</span><h3>{t.h}</h3><span class="done" data-done={`${p.slug}/${st[i].s}`}></span></a></li>)}
   </ol>
-  <a class="btn" href={`/${p.slug}/${st[0].s}`}>Start step 1 →</a>
+  <a class="btn" href={u(`/${p.slug}/${st[0].s}`)}>Start step 1 →</a>
 
   <h2 id="activity">Try it</h2>
   <Activities kind={p.slug === 'algorithms-and-data' ? 'bigo' : 'bug'} slug={p.slug} />
@@ -39,7 +40,7 @@ const st = steps[p.slug];
   <ul class="res">{p.reading.map(r => <li><a href={r.u} rel="noopener" target="_blank">{r.t}</a><span set:html={md(r.n)} /></li>)}</ul>
 
   <div class="pager">
-    {prev ? <a class="btn ghost" href={`/${prev.slug}`}>← {prev.name}</a> : <a class="btn ghost" href="/">← Home</a>}
-    {next ? <a class="btn" href={`/${next.slug}`}>Next: {next.name} →</a> : <a class="btn" href="/shipping">Next: Shipping real apps →</a>}
+    {prev ? <a class="btn ghost" href={u(`/${prev.slug}`)}>← {prev.name}</a> : <a class="btn ghost" href={u("/")}>← Home</a>}
+    {next ? <a class="btn" href={u(`/${next.slug}`)}>Next: {next.name} →</a> : <a class="btn" href={u("/shipping")}>Next: Shipping real apps →</a>}
   </div>
 </Base>

@@ -14,5 +14,6 @@ for (const p of pages) { const h = readFileSync(`dist/${p}.html`,'utf8'); if (/P
 if (!readFileSync('dist/algorithms-and-data/index.html','utf8').includes('class="activity bigo"')) { console.error('Big-O game missing'); fail++; }
 if (!readFileSync('dist/how-computers-work/binary-and-logic/index.html','utf8').includes('class="activity quiz"')) { console.error('quiz missing'); fail++; }
 if (!readFileSync('dist/shipping/index.html','utf8').includes('class="activity order"')) { console.error('order challenge missing'); fail++; }
+if (!readFileSync('dist/index.html','utf8').includes('href="https://johnder.com/computer-science-for-vibe-coders"')) { console.error('canonical not on johnder.com'); fail++; }
 if (!existsSync('dist/sitemap.xml')) { console.error('sitemap missing'); fail++; }
 console.log(fail ? `${fail} problem(s)` : `All ${pages.length} pages OK`); process.exit(fail ? 1 : 0);
