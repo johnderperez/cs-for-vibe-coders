@@ -66,11 +66,15 @@
   "rewrites": [
     {
       "source": "/computer-science-for-vibe-coders",
-      "destination": "/"
+      "destination": "/index.html"
     },
     {
-      "source": "/computer-science-for-vibe-coders/:path*",
-      "destination": "/:path*"
+      "source": "/computer-science-for-vibe-coders/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/computer-science-for-vibe-coders/:path+",
+      "destination": "/:path+"
     }
   ]
 }
