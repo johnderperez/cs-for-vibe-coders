@@ -1,4 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="Page not found"><h1>404: page not found</h1><p>That page doesn't exist. Good debugging instinct, though. <a href="/">Head home</a>.</p></Base>
+<Base title="Page not found">
+  <p class="eyebrow">curl -I this-page</p>
+  <h1>404: page not found</h1>
+  <div class="term"><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div><pre>HTTP/1.1 <span class="p">404 Not Found</span>
+<span class="c"># Good debugging instinct though. You checked the status code.</span></pre></div>
+  <p><a class="btn" href="/">cd ~</a></p>
+</Base>

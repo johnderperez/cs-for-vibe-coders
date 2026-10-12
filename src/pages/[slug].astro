@@ -1,54 +1,48 @@
 ---
 import Base from '../layouts/Base.astro';
 import { phases } from '../data/phases.js';
+import { tldr } from '../data/tldr.js';
 import { md } from '../data/md.js';
 export function getStaticPaths() { return phases.map((p, i) => ({ params: { slug: p.slug }, props: { p, prev: phases[i-1], next: phases[i+1] } })); }
 const { p, prev, next } = Astro.props;
+const tl = tldr[p.slug];
 ---
 <Base title={`Phase ${p.num}: ${p.title}`} description={`${p.goal} Plain-English lessons, common AI-generated mistakes, a milestone checklist and free resources.`}>
-  <p class="eyebrow">Phase {p.num} of 4</p>
+  <p class="eyebrow">cd phase-{p.num} <span class="dim">// {p.num} of 4</span></p>
   <h1>{p.title}</h1>
-  <p class="lead"><strong>Goal:</strong> {p.goal}</p>
-  <p>{p.intro}</p>
-  <nav aria-label="On this page" class="muted">Jump to: <a href="#topics">Core topics</a> · <a href="#mistakes">AI mistakes to watch for</a> · <a href="#milestones">Milestone checklist</a> · <a href="#reading">Reading &amp; resources</a></nav>
+  <p class="tldr"><b>TL;DR</b>{tl.line}</p>
+  <p class="muted"><strong>Goal:</strong> {p.goal}</p>
+  <details><summary><span class="t">Why this phase matters</span></summary><div class="body"><p>{p.intro}</p></div></details>
+  <nav aria-label="On this page" class="toc"><a href="#topics">topics</a><a href="#mistakes">ai-mistakes</a><a href="#milestones">checklist</a><a href="#reading">reading</a></nav>
 
   <h2 id="topics">Core topics</h2>
-  {p.topics.map(t => (
-    <section class="topic">
-      <h3>{t.h}</h3>
-      <p set:html={md(t.p)} />
-      <p class="why"><strong>Why it matters when you build with AI:</strong> <span set:html={md(t.why)} /></p>
-    </section>
+  <p class="dim">// tap any topic to expand</p>
+  {p.topics.map((t, i) => (
+    <details>
+      <summary><span class="t">{t.h}</span><span class="s" set:html={md(tl.topics[i] || '')} /></summary>
+      <div class="body">
+        <p set:html={md(t.p)} />
+        <p class="why"><strong>why it matters with AI:</strong> <span set:html={md(t.why)} /></p>
+      </div>
+    </details>
   ))}
 
-  <h2 id="mistakes">Common AI-generated mistakes to watch for</h2>
+  <h2 id="mistakes">AI mistakes to watch for</h2>
   <div class="warn"><ul>{p.mistakes.map(m => <li set:html={md(m)} />)}</ul></div>
-  <p class="muted">Tip: paste a file into your AI tool and ask, "Check this for each of these issues and explain any you find." Then verify what it says yourself.</p>
+  <p class="dim">// tip: paste a file into your AI and ask "check this for each of these issues". Then verify yourself.</p>
 
-  <h2 id="milestones">Hands-on milestone checklist</h2>
-  <p class="muted">Your ticks are saved in this browser only.</p>
+  <h2 id="milestones">Milestone checklist</h2>
+  <p class="progress" data-progress={p.slug} aria-live="polite"></p>
   <ul class="checks" data-key={p.slug}>
     {p.milestones.map((m, i) => <li><input type="checkbox" id={`${p.slug}-${i}`} /><label for={`${p.slug}-${i}`} set:html={md(m)} /></li>)}
   </ul>
+  <p class="dim">// ticks are saved in this browser only</p>
 
-  <h2 id="reading">Recommended reading &amp; free resources</h2>
-  <ul class="res">{p.reading.map(r => <li><a href={r.u} rel="noopener" target="_blank">{r.t}</a><span>{r.n}</span></li>)}</ul>
+  <h2 id="reading">Reading &amp; free resources</h2>
+  <ul class="res">{p.reading.map(r => <li><a href={r.u} rel="noopener" target="_blank">{r.t}</a><span set:html={md(r.n)} /></li>)}</ul>
 
   <div class="pager">
-    {prev ? <a class="btn ghost" href={`/${prev.slug}`}>← Phase {prev.num}: {prev.title}</a> : <a class="btn ghost" href="/">← Home</a>}
+    {prev ? <a class="btn ghost" href={`/${prev.slug}`}>← Phase {prev.num}</a> : <a class="btn ghost" href="/">← Home</a>}
     {next ? <a class="btn" href={`/${next.slug}`}>Phase {next.num}: {next.title} →</a> : <a class="btn" href="/shipping">Next: Shipping real apps →</a>}
   </div>
-  <script>
-    document.querySelectorAll('.checks').forEach(list => {
-      const key = 'csvc-' + list.dataset.key;
-      let saved = []; try { saved = JSON.parse(localStorage.getItem(key) || '[]'); } catch {}
-      list.querySelectorAll('input').forEach((box, i) => {
-        box.checked = !!saved[i];
-        box.addEventListener('change', () => {
-          const s = [...list.querySelectorAll('input')].map(b => b.checked);
-          try { localStorage.setItem(key, JSON.stringify(s)); } catch {}
-        });
-      });
-    });
-  </script>
 </Base>

@@ -9,5 +9,7 @@ for (const p of pages) {
   for (const needle of ['<title>', 'name="description"', 'property="og:image"', '<h1']) if (!h.includes(needle)) { console.error(f, 'lacks', needle); fail++; }
 }
 if (!readFileSync('dist/prompt/index.html','utf8').includes('id="copy"')) { console.error('copy button missing'); fail++; }
+for (const p of pages.slice(1,5)) { const h = readFileSync(`dist/${p}.html`,'utf8'); if (!h.includes('class="checks"') || !h.includes('<details')) { console.error(p, 'lacks checklist or expandable topics'); fail++; } }
+if (!readFileSync('dist/index.html','utf8').includes('id="theme"')) { console.error('theme toggle missing'); fail++; }
 if (!existsSync('dist/sitemap.xml')) { console.error('sitemap missing'); fail++; }
 console.log(fail ? `${fail} problem(s)` : `All ${pages.length} pages OK`); process.exit(fail ? 1 : 0);
